@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thank You Card for Ma'am Roan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #1d1b4c;
+      --ink-soft: #3a3780;
+      --paper: #f4f1ff;
+      --coral: #ff6b6b;
+      --mint: #7ee8c7;
+      --gold: #ffd166;
+      --card-w: 340px;
+      --card-h: 440px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: "Bricolage Grotesque", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 20%, var(--ink-soft) 0, transparent 40%),
+        radial-gradient(circle at 85% 80%, #4b2a7b 0, transparent 45%),
+        var(--ink);
+      overflow-x: hidden;
+    }
+
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      z-index: 0;
+      animation: drift 9s ease-in-out infinite alternate;
+    }
+    body::before { width: 180px; height: 180px; top: 8%; right: 10%; background: var(--coral); opacity: .18; }
+    body::after  { width: 120px; height: 120px; bottom: 10%; left: 8%; background: var(--mint); opacity: .18; animation-delay: -4s; }
+
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-28px); }
+    }
+
+    #lockForm {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 360px);
+      padding: 36px 30px;
+      background: var(--paper);
+      border-radius: 20px;
+      box-shadow: 8px 8px 0 var(--coral);
+      text-align: center;
+      transition: opacity .4s, transform .4s;
+    }
+
+    #lockForm .icon {
+      display: grid;
+      place-items: center;
+      width: 64px; height: 64px;
+      margin: 0 auto 16px;
+      font-size: 30px;
+      background: var(--gold);
+      border-radius: 50%;
+      border: 3px solid var(--ink);
+    }
+
+    #lockForm h1 { font-size: 1.5rem; font-weight: 800; line-height: 1.2; }
+    #lockForm p  { margin: 8px 0 22px; font-size: .95rem; color: var(--ink-soft); }
+
+    #lockForm input {
+      width: 100%;
+      padding: 14px 16px;
+      font: inherit;
+      color: var(--ink);
+      background: #fff;
+      border: 3px solid var(--ink);
+      border-radius: 12px;
+      outline: none;
+      transition: box-shadow .2s;
+    }
+    #lockForm input:focus-visible { box-shadow: 0 0 0 4px var(--mint); }
+
+    #lockForm button {
+      width: 100%;
+      margin-top: 14px;
+      padding: 14px;
+      font: inherit;
+      font-weight: 700;
+      color: #fff;
+      background: var(--ink);
+      border: 3px solid var(--ink);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform .15s, background .15s;
+    }
+    #lockForm button:hover { background: var(--coral); border-color: var(--ink); transform: translateY(-2px); }
+    #lockForm button:focus-visible { outline: 4px solid var(--mint); outline-offset: 2px; }
+
+    #error {
+      min-height: 1.4em;
+      margin-top: 12px;
+      font-size: .9rem;
+      font-weight: 700;
+      color: #c92a2a;
+    }
+
+    #lockForm.shake { animation: shake .4s; }
+    @keyframes shake {
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+
+    #card {
+      position: absolute;
+      z-index: 1;
+      width: var(--card-w);
+      height: var(--card-h);
+      perspective: 1600px;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(.9);
+      transition: opacity .5s .2s, transform .5s .2s;
+    }
+
+    .inside {
+      position: absolute;
+      inset: 0;
+      padding: 34px 28px;
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+      border-radius: 6px 18px 18px 6px;
+      box-shadow: 8px 8px 0 var(--mint);
+      overflow: hidden;
+    }
+
+    .inside::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 14px;
+      background: repeating-linear-gradient(to bottom, var(--ink) 0 12px, transparent 12px 24px);
+      opacity: .85;
+    }
+
+    .inside h2 {
+      margin-left: 8px;
+      font-size: 1.7rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .inside .to { margin: 6px 0 18px 8px; font-size: .9rem; color: var(--ink-soft); }
+
+    .inside .message {
+      margin-left: 8px;
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+    .inside .message + .message { margin-top: 12px; }
+
+    .inside .sign {
+      margin: auto 0 0 8px;
+      padding-top: 18px;
+      border-top: 3px dashed var(--coral);
+    }
+    .inside .sign small { display: block; font-size: .8rem; color: var(--ink-soft); }
+    .inside .sign strong {
+      display: block;
+      font-family: "Caveat", "Brush Script MT", cursive;
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--coral);
+    }
+    .inside .sign span { font-size: .8rem; font-weight: 700; }
+
+    .cover {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 28px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 80% 15%, var(--gold) 0 14%, transparent 15%),
+        linear-gradient(160deg, var(--coral), #d6336c);
+      border: 4px solid var(--ink);
+      border-radius: 6px 18px 18px 6px;
+      transform-origin: left center;
+      transform: rotateY(0deg);
+      transition: transform 1.2s cubic-bezier(.6, .05, .2, 1);
+      backface-visibility: hidden;
+      z-index: 3;
+    }
+
+    .cover .big {
+      font-size: 3.4rem;
+      line-height: .95;
+      font-weight: 800;
+      letter-spacing: -2px;
+      text-shadow: 4px 4px 0 var(--ink);
+    }
+    .cover .sub { margin-top: 18px; font-size: 1rem; font-weight: 700; }
+    .cover .heart { margin-top: 22px; font-size: 2.4rem; animation: beat 1.2s infinite; }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.2); }
+    }
+
+    body.unlocked #lockForm { opacity: 0; transform: scale(.9); pointer-events: none; position: absolute; }
+    body.unlocked #card     { opacity: 1; transform: scale(1); pointer-events: auto; }
+    body.unlocked .cover    { transform: rotateY(-172deg); }
+
+    @media (max-width: 400px) {
+      :root { --card-w: 300px; --card-h: 470px; }
+      .cover .big { font-size: 2.8rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: .01s !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <form id="lockForm" autocomplete="off">
+    <div class="icon">🔒</div>
+    <h1>A card for Ma'am Roan</h1>
+    <p>Enter the password to open it.</p>
+
+    <label for="pass" hidden>Password</label>
+    <input type="password" id="pass" name="pass" placeholder="Type the password" required autofocus>
+
+    <button type="submit">Open card</button>
+    <div id="error" role="alert"></div>
+  </form>
+
+  <section id="card" aria-label="Thank you card">
+
+    <article class="inside">
+      <h2>Thank you, Ma'am!</h2>
+      <p class="to">To Ma'am Roan Gutierrezz Cochanco</p>
+
+      <p class="message">
+        I'm very grateful for everything I've learned from you, Ma'am.
+      </p>
+      <p class="message">
+        I hope this lesson can help me reach my dream job of becoming a
+        work-from-home web developer. Thank you so much!
+      </p>
+
+      <div class="sign">
+        <small>With gratitude,</small>
+        <strong>Yvan Gabriel B. Adelante</strong>
+        <span>BS Information Technology</span>
+      </div>
+    </article>
+
+    <div class="cover">
+      <div class="big">Thank<br>You!</div>
+      <div class="sub">for being a great teacher</div>
+      <div class="heart">💜</div>
+    </div>
+
+  </section>
+
+  <script>
+    const form = document.getElementById("lockForm");
+    const input = document.getElementById("pass");
+    const error = document.getElementById("error");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (input.value.trim().toLowerCase() === "roan ganda") {
+        document.body.classList.add("unlocked");
+      } else {
+        error.textContent = "Wrong password, try again.";
+        form.classList.remove("shake");
+        void form.offsetWidth;
+        form.classList.add("shake");
+        input.select();
+      }
+    });
+  </script>
+</body>
+</html>
